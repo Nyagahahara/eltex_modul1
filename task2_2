@@ -1,0 +1,15 @@
+#!/bin/bash
+#Модернизировать скрипт выше, добавив в него возможность пользователю выбирать место расположения папок, их количество, шаблон имени и т.д.
+#from directory specified by the user
+echo -n "Enter the directory: "
+read DIR
+echo -n "Enter the folder's name templates (2): "
+read TEM1 TEM2
+echo -n "Enter file's name template (1): "
+read FILE
+mkdir ${DIR}/${TEM1}{1..50}
+mkdir ${DIR}/${TEM1}{1..50}/${TEM2}{1..100}
+for i in ${DIR}/${TEM1}{1..50}/${TEM2}{1..100}
+do
+	touch ${i}/${FILE}{1..200}
+done

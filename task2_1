@@ -1,0 +1,14 @@
+#!/bin/bash
+#Скриптом на BASH, создать 50 папок в указанной, в каждой из 50ти папок создать еще 100 подпапок, и в каждой из этих подпапок создать 200 пустых файлов.
+if [ -n "$1" ]
+then
+	DIR=$1
+else
+	DIR=$PWD
+fi
+mkdir $DIR/folder{1..50}
+mkdir $DIR/folder{1..50}/folders{1..100}
+for i in $DIR/folder{1..50}/folders{1..100}
+do
+	touch $i/file{1..200}
+done

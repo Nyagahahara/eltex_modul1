@@ -1,0 +1,16 @@
+#!/bin/bash
+#Написать скрипт: будильник (в нужный момент проиграть музыку, скрипт запрашивает время срабатывания и файл который надо проиграть).
+echo -n "Enter date (MM/DD/YY or DD.MM.YY): "
+read DATE
+echo -n "Enter time (HH:MM): "
+read TIME
+echo -n "Choose file: "
+read FILE
+echo $FILE
+touch .alarm
+chmod 755 .alarm
+echo "#!/bin/bash 
+mpg123 '$FILE' 
+rm .alarm" > .alarm
+at -f ./.alarm $TIME $DATE
+

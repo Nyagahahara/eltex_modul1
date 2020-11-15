@@ -1,0 +1,90 @@
+#!/bin/bash
+
+#Написать скрипт для резервного копирования указанной информации в указанное место, с указанием периодичности\либо времени запуска. Скрипт должен иметь удобный для человека интерфейс. Резервное копирование должно осуществляться как средствами dd, так и tar. По выбору пользователя, должна быть возможность работы с git.
+
+currenttime=`date +%d:%m:%y-%_H:%M:%S`
+
+echo "Выберите способ резервного копирования:
+	dd
+	tar
+	git"
+read choice
+case $choice in 
+	dd)
+		echo -n "Введите путь к копируемой информации: "
+		read SOURCE
+		echo -n "Введите путь, где нужно сохранить информацию: "
+		read SINK
+		echo "#!/bin/bash
+			dd if=$SOURCE of=$SINK/backup\`date +%d:%m:%y-%_H:%M:%S\`.dd
+			 " > temtask$currenttime
+		chmod 755 temtask$currenttime
+		;;
+	tar)
+		echo -n "Введите путь к копируемой информации: "
+		read SOURCE
+		echo -n "Введите путь, где нужно сохранить информацию: "
+		read SINK
+		echo "#!/bin/bash
+			tar cf $SINK/\`date +%d:%m:%y-%_H:%M:%S\`.tar $SOURCE " > temtask$currenttime
+		chmod 755 temtask$currenttime
+		;;
+	git)
+		echo -n "Введите путь к проекту: "
+		read source
+		if test `ls $source/.git | wc -l` -le 1 
+		then
+			current_dir = `pwd`
+			cd $source
+			git init
+			cd $current_dir
+		fi
+		echo "#!/bin/bash
+			cd '$source'
+			git add '$source'
+			git commit " > temtask$currenttime
+		chmod 755 temtask$currenttime
+		;;
+esac
+
+echo -n "Копировать периодически (1) или однократно (2)?: "
+read p1
+case $p1 in
+	1)
+		echo -n "Введите дату(MM/DD/YY or DD.MM.YY): "
+		read DATE
+		echo -n "Введите время (HH:MM): "
+		read TIME
+		at -f ./temtask$currenttime $TIME $DATE
+		;;
+	2)
+		echo -n "Введите число и период (min/hour/day/month/weekday): "
+		read NUM PERIOD
+		crontab -l > foocron
+		case $PERIOD in
+			min)
+				#min hour day month weekday
+				echo "*/$NUM * * * * " >> foocron
+				;;
+			hour)
+				echo "* */$NUM * * * " >> foocron 
+				;;
+			day)
+				echo "* * */$NUM * * " >> foocron 
+				;;
+			month)
+				echo "* * * */$NUM * " >> foocron 
+				;;
+			weekday)
+				echo "* * * * */$NUM " >> foocron 
+				;;
+		esac
+		echo "cd $(pwd) && $(pwd)/temtask$currenttime
+" >> foocron 
+		crontab foocron
+		rm foocron
+		;;
+esac
+
+exit 0
+

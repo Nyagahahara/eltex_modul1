@@ -1,0 +1,20 @@
+#!/bin/bash
+#Написать скрипт, который контролирует выполнение какого-либо процесса и в случае прерывания этого процесса возобновляет его работу. Скрипт должен запросить периодичность проверки и имя процесса.
+echo -n "Enter the process name: "
+read PROC
+echo -n "Enter frequency of verification (in minutes): "
+read PERIOD
+echo "#!/bin/bash
+echo restarting >> meow.log
+if [ \`ps -ax | grep $PROC | wc -l \` -eq 1 ]
+then
+	$PROC & 
+	echo restarted >> meow.log
+fi
+" > .temfile
+chmod 755 .temfile
+crontab -l > foocron
+echo "*/$PERIOD * * * * cd $(pwd) && $(pwd)/.temfile
+" >> foocron 
+crontab foocron
+rm foocron

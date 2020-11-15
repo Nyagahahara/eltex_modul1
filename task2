@@ -1,0 +1,6 @@
+cat /etc/passwd | awk -F : '{print $1,$7}' | sort | tr [:lower:] [:upper:] | tr ':' ' '
+
+cat /etc/passwd | cut -d ':' -f 1,7 | sort | sed 's/[a-z]/\U&/g' | tr ':' ' '
+
+cat /etc/passwd | cut -d ':' -f 1,7 | sort | awk '{print toupper($0)}' | tr ':' ' '
+cut -f 1,7 -d : /etc/passwd | tr [:lower:] [:upper:] | sort

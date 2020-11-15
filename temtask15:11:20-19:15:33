@@ -1,0 +1,2 @@
+#!/bin/bash
+			tar cf /home/yulia/eltex/`date +%d:%m:%y-%_H:%M:%S`.tar /home/yulia/eltex/modul1 

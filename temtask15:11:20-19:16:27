@@ -1,0 +1,4 @@
+#!/bin/bash
+			cd '/home/yulia/eltex/modul1'
+			git add '/home/yulia/eltex/modul1'
+			git commit 
