@@ -1,0 +1,53 @@
+#!/bin/bash
+#Написать скрипт, который получая данные с top, представляет их в более удобном для пользователя виде, с возможностью наложения фильтров на выход.
+
+echo -n "Выбрать процессы по PID? (y/n): "
+read SHOW_BY_PID
+echo -n "Введите PID: "
+read PID
+
+echo -n "Выбрать процессы по пользователю? (y/n): "
+read SHOW_BY_USER
+echo -n "Введите имя пользователя: "
+read USER
+
+echo -n "Требуется ли сортировка по полю? (y/n): "
+read SORT
+echo -n "Выберите поле для сортировки (PID/PR/NI/VIRT/RES/SHR/S/%CPU/%MEM/TIME+): "
+read SORT_FIELD
+
+COMMAND="top -b "
+
+case $SHOW_BY_PID in
+	[yY]|[yY][eE][sS])
+		#top -b -p $PID
+		VAR1="-p $PID "
+		COMMAND="$COMMAND$VAR1"
+		;;	
+	*)
+	
+		;;
+esac
+
+case $SHOW_BY_USER in
+	[yY]|[yY][eE][sS])
+		#top -b -U $USER
+		VAR1="-U $USER "
+		COMMAND="$COMMAND$VAR1"
+		;;	
+	*)
+	
+		;;
+esac
+
+case $SORT in
+	[yY]|[yY][eE][sS])
+		#top -b -o $SORT_FIELD
+		VAR1="-o $SORT_FIELD "
+		COMMAND="$COMMAND$VAR1"
+		;;	
+	*)	
+		;;
+esac
+
+$COMMAND

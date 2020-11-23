@@ -1,0 +1,2 @@
+#!/bin/bash
+cat /var/log/auth.log | grep 'systemd-logind' | grep 'New session' | cut -d ' ' -f3,4 | cut -d - -f1

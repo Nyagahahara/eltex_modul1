@@ -1,1 +1,5 @@
-find / -type f -size +100M
+#!/bin/bash
+#Найти все файлы больше 100Мб в вашей ОС.
+FOLDER=/
+SIZE=100
+find $FOLDER -type f -size +$SIZEM
