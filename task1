@@ -1,7 +1,0 @@
-df -h | grep -e '/dev/sda3' | awk '{print $5;}' | tr -d '%' 
-
-df -h | grep -e '/dev/sda3' | tr -s "\t " ":" | cut -d : -f 5 | tr -d '%' 
-
-df -h | sed -n 4p | sed 's/\ \{1,\}/:/g' | cut -d : -f 5 | sed 's/\%//' 
-
-tr -s ' '

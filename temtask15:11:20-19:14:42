@@ -1,3 +1,0 @@
-#!/bin/bash
-			dd if=/home/yulia/eltex/modul1 of=/home/yulia/eltex/backup`date +%d:%m:%y-%_H:%M:%S`.dd
-			 

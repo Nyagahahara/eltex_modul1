@@ -1,8 +1,0 @@
-#!/bin/bash
-echo restarting >> meow.log
-if [ `ps -ax | grep ./script | wc -l ` -eq 1 ]
-then
-	./script & 
-	echo restarted >> meow.log
-fi
-
